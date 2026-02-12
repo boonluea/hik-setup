@@ -11,6 +11,7 @@ read -p "👤 Enter Ubuntu Username (default: $(whoami)): " INPUT_USER
 CURRENT_USER=${INPUT_USER:-$(whoami)}
 echo "✅ Using Username: $CURRENT_USER"
 
+
 # 1. Update & Install Dependencies
 sudo apt update
 sudo apt install -y curl firefox x11-xserver-utils

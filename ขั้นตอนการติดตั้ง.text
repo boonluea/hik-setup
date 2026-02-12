@@ -3,5 +3,6 @@
     - ตั้งค่าให้ auto login เมือ่เปิดเครื่องใหม่
     - ตั้งค่าไม่ให้พักหน้าจอเลย
 2. รันคำสั่งติดตั้งบน Terminal curl -O https://raw.githubusercontent.com/boonluea/hik-setup/main/install.sh && chmod +x install.sh && ./install.sh
+    - ใส่ user ตอนติดตั้ง
     - ใส่ pass ตอนติดตั้ง
 3. ถ้าติดตั้ง เสร็จเครื่องจะ reboot 
