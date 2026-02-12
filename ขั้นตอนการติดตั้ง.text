@@ -1,3 +1,6 @@
-1. ติดตั้ง ubuntu desktop 24.04.3 LTS. https://ubuntu.com/download/desktop
+1. ติดตั้ง ubuntu desktop 24.04.3 LTS. https://ubuntu.com/download/desktop 
+    - จด user pass ไว้ให้ดี
+    - ตั้งค่าให้ auto login เมือ่เปิดเครื่องใหม่
+    - ตั้งค่าไม่ให้พักหน้าจอเลย
 2. รันคำสั่งติดตั้งบน Terminal curl -sSL https://raw.githubusercontent.com/boonluea/hik-setup/main/install.sh | bash
 3. ถ้าติดตั้ง เสร็จเครื่องจะ reboot 
