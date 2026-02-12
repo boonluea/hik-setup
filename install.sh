@@ -35,7 +35,9 @@ sudo docker run -d \
   --restart always \
   -e MYSQL_ROOT_PASSWORD=Bl_14042532 \
   -e MYSQL_DATABASE=nvr_system \
+  -e TZ=Asia/Bangkok \
   -v mysql_data:/var/lib/mysql \
+  -v /etc/localtime:/etc/localtime:ro \
   mysql:8.0
 
 echo "⏳ Waiting for MySQL to warm up (20s)..."
@@ -81,7 +83,10 @@ sudo docker run -d \
   --network host \
   --restart always \
   -e DISPLAY=:0 \
+  -e TZ=Asia/Bangkok \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v face_images:/app/static/faces \
   boonhlua/hik-face-system:latest
 
 echo "✅ ALL SETUP COMPLETE!"
