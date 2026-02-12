@@ -77,6 +77,20 @@ sudo docker run -d \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   boonhlua/hik-face-system:latest
 
+echo "💾 Starting MySQL Database Container..."
+# สร้าง Volume เพื่อให้ข้อมูลไม่หายเวลาลบ Container
+sudo docker volume create mysql_data
+
+# รัน MySQL (ตั้งรหัสผ่านตามที่คุณต้องการ)
+sudo docker run -d \
+  --name mysql-db \
+  --network host \
+  --restart always \
+  -e MYSQL_ROOT_PASSWORD=Bl_14042532 \
+  -e MYSQL_DATABASE=nvr_system \
+  -v mysql_data:/var/lib/mysql \
+  mysql:8.0
+
 echo "✅ ALL SETUP COMPLETE for user: $CURRENT_USER"
 echo "🔄 The system will REBOOT in 10 seconds..."
 sleep 10
