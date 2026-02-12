@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ป้องกันปัญหาการอ่านค่า Input เมื่อรันผ่าน curl | bash
+exec < /dev/tty
+
 echo "🚀 Starting Hik-Face-System Setup..."
 
 # --- ส่วนการรับค่าจากผู้ใช้งาน ---
