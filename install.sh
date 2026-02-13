@@ -33,7 +33,7 @@ sudo docker run -d \
   --name mysql-db \
   --network host \
   --restart always \
-  -e MYSQL_ROOT_PASSWORD=Bl_14042532 \
+  -e MYSQL_ROOT_PASSWORD=Kj#9v$Lp2!mZ7xR@Qn^4tW*8 \
   -e MYSQL_DATABASE=nvr_system \
   -e TZ=Asia/Bangkok \
   -v mysql_data:/var/lib/mysql \
