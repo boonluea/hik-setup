@@ -1,7 +1,8 @@
 การตั้งค่า NVR hik ด้วย web config.
 1. เลือกภูมิภาค
-2. ตั้ง password เป็น Hik2026!System
-3. ตั้งรหัสผ่านเริ่มต้นของช่องเป็น  Hik2026!System
+2. ตั้ง password 
+
+
 การติดตั้งระบบ hik-face
 1. ติดตั้ง ubuntu desktop 24.04.3 LTS. https://ubuntu.com/download/desktop 
     - จด user pass ไว้ให้ดี
@@ -11,3 +12,4 @@
     - ใส่ user ตอนติดตั้ง
     - ใส่ pass ตอนติดตั้ง
 3. ถ้าติดตั้ง เสร็จเครื่องจะ reboot 
+
