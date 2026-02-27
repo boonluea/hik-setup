@@ -15,7 +15,6 @@ curl -O https://raw.githubusercontent.com/boonluea/hik-setup/main/install.sh && 
 chmod +x install.sh && \
 ./install.sh
 """""""""""""""""""""""
-
     - ใส่ user ตอนติดตั้ง
     - ใส่ pass ตอนติดตั้ง
 3. ถ้าติดตั้ง เสร็จเครื่องจะ reboot 
