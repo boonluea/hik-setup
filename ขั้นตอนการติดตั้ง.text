@@ -11,6 +11,7 @@
 2. รันคำสั่งติดตั้งบน Terminal 
 """""""""""""""""""""""
 rm -f install.sh && \
+sudo apt install curl
 curl -O https://raw.githubusercontent.com/boonluea/hik-setup/main/install.sh && \
 chmod +x install.sh && \
 ./install.sh
