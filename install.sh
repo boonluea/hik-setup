@@ -77,7 +77,7 @@ sudo docker run -d \
   -e TZ=Asia/Bangkok \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v /etc/localtime:/etc/localtime:ro \
-  containrrr/watchtower --interval 300 --cleanup
+  containrrr/watchtower --interval 120 --cleanup
 
 sudo docker run -d \
   --name face-api \
