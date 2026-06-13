@@ -54,6 +54,7 @@ sleep 20
 
 
 # 5. Autostart .desktop
+mkdir -p /home/$CURRENT_USER/.config/autostart/
 cat <<EOF > /home/$CURRENT_USER/.config/autostart/kiosk_start.desktop
 [Desktop Entry]
 Type=Application
