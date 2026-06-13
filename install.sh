@@ -52,26 +52,12 @@ sudo docker run -d \
 echo "⏳ Waiting for MySQL to warm up (20s)..."
 sleep 20 
 
-# 4. ตั้งค่าสคริปต์รันหน้าจอ
-mkdir -p /home/$CURRENT_USER/.config/autostart
-cat <<EOF > /home/$CURRENT_USER/allow_docker_display.sh
-#!/bin/bash
-export DISPLAY=:0
-sleep 15
-xhost +local:docker
-/usr/bin/firefox --kiosk http://127.0.0.1:8000 &
-# สั่ง restart api เพื่อให้มั่นใจว่าต่อ DB ติดหลังจากระบบพร้อม
-sudo /usr/bin/docker restart face-api
-EOF
-
-chmod +x /home/$CURRENT_USER/allow_docker_display.sh
-sudo chown $CURRENT_USER:$CURRENT_USER /home/$CURRENT_USER/allow_docker_display.sh
 
 # 5. Autostart .desktop
 cat <<EOF > /home/$CURRENT_USER/.config/autostart/kiosk_start.desktop
 [Desktop Entry]
 Type=Application
-Exec=/bin/bash -c "firefox --kiosk http://127.0.0.1:8000"
+Exec=firefox --kiosk http://127.0.0.1:8000
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
