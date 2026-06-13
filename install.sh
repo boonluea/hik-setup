@@ -71,7 +71,7 @@ sudo chown $CURRENT_USER:$CURRENT_USER /home/$CURRENT_USER/allow_docker_display.
 cat <<EOF > /home/$CURRENT_USER/.config/autostart/kiosk_start.desktop
 [Desktop Entry]
 Type=Application
-Exec=firefox --kiosk http://127.0.0.1:8000 
+Exec=/bin/bash -c "firefox --kiosk http://127.0.0.1:8000"
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
