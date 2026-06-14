@@ -79,7 +79,7 @@ echo "[*] Setting up Google Chrome Kiosk Autostart..."
 
 # สร้างโฟลเดอร์สำหรับเก็บสคริปต์ควบคุมการเปิดหน้าจอ
 mkdir -p /home/$CURRENT_USER/.config/autostart
-os_bin_dir="/home/$CURRENT_USER/.local/bin"
+os_bin_dir="/home/$CURRENT_USER/.local/bin" 
 mkdir -p $os_bin_dir
 
 # --- สร้าง Script ดักรอ Docker Container จนกว่าเว็บจะเปิดใช้งานได้ ---
