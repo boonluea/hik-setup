@@ -54,18 +54,86 @@ sleep 20
 
 
 # 5. Autostart .desktop
+# ==============================================================================
+# --- [1] ขั้นตอนการติดตั้ง Google Chrome (เสถียรที่สุดสำหรับ Kiosk Mode) ---
+# ==============================================================================
+echo "[*] Downloading and Installing Google Chrome..."
+# อัปเดตแพ็กเกจและติดตั้งตัวจัดการการดาวน์โหลด
+sudo apt-get update
+sudo apt-get install -y wget curl
+
+# ดาวน์โหลด Google Chrome ตัวล่าสุด (.deb)
+wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb
+
+# ติดตั้ง Chrome พร้อมแก้ปัญหา Dependencies อัตโนมัติ
+sudo dpkg -i /tmp/google-chrome.deb || sudo apt-get install -f -y
+
+# ลบไฟล์ติดตั้งที่ใช้เสร็จแล้วเพื่อประหยัดพื้นที่
+rm /tmp/google-chrome.deb
+
+# ==============================================================================
+# --- [2] ขั้นตอนการตั้งค่า Autostart (Chrome Kiosk + Docker Health Check) ---
+# ==============================================================================
+echo "[*] Setting up Google Chrome Kiosk Autostart..."
+
+# สร้างโฟลเดอร์สำหรับเก็บสคริปต์ควบคุมการเปิดหน้าจอ
+mkdir -p /home/$CURRENT_USER/.config/autostart
+os_bin_dir="/home/$CURRENT_USER/.local/bin"
+mkdir -p $os_bin_dir
+
+# --- สร้าง Script ดักรอ Docker Container จนกว่าเว็บจะเปิดใช้งานได้ ---
+cat << 'EOF' > "$os_bin_dir/launch_kiosk.sh"
+#!/bin/bash
+# ล้างโปรเซสเก่าของ Chrome ที่อาจตกค้างจากการปิดระบบไม่สมบูรณ์
+pkill --oldest chrome
+pkill -f google-chrome
+
+echo "[*] Waiting for face_api Docker container to be ready..."
+
+# ลูปตรวจสอบหน้าเว็บพอร์ต 8000 (ลองเชื่อมต่อทุกๆ 3 วินาที จนกว่าจะได้ HTTP Status 200 หรือ 401 ของหน้า Admin)
+until [ "$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/)" ] || [ "$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/admin)" ]; do
+    echo "[-] System is not ready yet. Retrying in 3 seconds..."
+    sleep 3
+done
+
+echo "[+] face_api Docker is up! Launching Google Chrome Kiosk mode..."
+# หน่วงเวลาเพิ่มอีก 2 วินาทีเพื่อให้มั่นใจว่า FastAPI โหลดเธรด NVR เสร็จสมบูรณ์
+sleep 2
+
+# เรียกใช้ Chrome ในโหมด Kiosk พร้อมเปิดฟังก์ชันการทำงานที่จำเป็นสำหรับแอปพลิเคชันตู้หน้าบ้าน
+google-chrome --kiosk \
+              --no-first-run \
+              --fast \
+              --fast-start \
+              --disable-infobars \
+              --disable-session-crashed-bubble \
+              --no-default-browser-check \
+              --autoplay-policy=no-user-gesture-required \
+              http://127.0.0.1:8000
+EOF
+
+# ตั้งสิทธิ์ให้สคริปต์ตัวตรวจสอบสามารถกดรันทำงานได้
+chmod +x "$os_bin_dir/launch_kiosk.sh"
+chown $CURRENT_USER:$CURRENT_USER "$os_bin_dir/launch_kiosk.sh"
+
+
+# --- สร้างไฟล์ควบคุม .desktop ชี้ไปที่ตัว Script ที่สร้างขึ้นเมื่อครู่ ---
 cat <<EOF > /home/$CURRENT_USER/.config/autostart/kiosk_start.desktop
 [Desktop Entry]
 Type=Application
-Exec=firefox --kiosk http://127.0.0.1:8000
+Exec=/home/$CURRENT_USER/.local/bin/launch_kiosk.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
-Name=Hik Face System Kiosk
+Name=Hik Face System Kiosk (Chrome)
+Comment=Wait for Docker Container and Open Chrome Kiosk
 EOF
 
+# จัดการกำหนดสิทธิ์เจ้าของไฟล์ของตัว .desktop ให้ถูกต้อง
 sudo chown $CURRENT_USER:$CURRENT_USER /home/$CURRENT_USER/.config/autostart/kiosk_start.desktop
+chmod +x /home/$CURRENT_USER/.config/autostart/kiosk_start.desktop
 
+echo "[+] Chrome Kiosk Installation & Configuration Completed Successfully!"
 # 6. Crontab Reboot
 (crontab -l 2>/dev/null | grep -v "/sbin/shutdown -r now"; echo "0 0 * * * /sbin/shutdown -r now") | crontab -
 
