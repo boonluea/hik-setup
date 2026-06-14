@@ -54,6 +54,7 @@ sleep 20
 
 
 # 5. Autostart .desktop
+<<<<<<< HEAD
 # ==============================================================================
 # --- [1] ขั้นตอนการติดตั้ง Google Chrome (เสถียรที่สุดสำหรับ Kiosk Mode) ---
 # ==============================================================================
@@ -118,6 +119,9 @@ chown $CURRENT_USER:$CURRENT_USER "$os_bin_dir/launch_kiosk.sh"
 
 
 # --- สร้างไฟล์ควบคุม .desktop ชี้ไปที่ตัว Script ที่สร้างขึ้นเมื่อครู่ ---
+=======
+mkdir -p /home/$CURRENT_USER/.config/autostart/
+>>>>>>> dfda0f4cf19c901be640678313aa9ed0dc12e1aa
 cat <<EOF > /home/$CURRENT_USER/.config/autostart/kiosk_start.desktop
 [Desktop Entry]
 Type=Application
